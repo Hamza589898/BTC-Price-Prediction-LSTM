@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 
@@ -45,7 +45,7 @@ model.add(Dense(1))  # ✅ FIXED: Output sirf Close price
 
 # compile model
 model.compile(optimizer='adam',loss='mean_squared_error')
-model.fit(X_train,y_train,epochs=74,batch_size=32)
+model.fit(X_train,y_train,epochs=75,batch_size=32)
 
 # Predict
 prediction = model.predict(X_Test)
@@ -70,6 +70,6 @@ print("Predicted BTC Prices (last 10 days):")
 for i, price in enumerate(prediction_inv[-10:]):
     print(f"Day {i+1}: ${price[0]:.2f}")
 
-# Print mean square error
-MSE = mean_squared_error(y_test_inv, prediction_inv)
-print(f"Mean Square Error : {MSE:.2f}")
+# Print R2 score
+r2 = r2_score(y_test_inv,prediction_inv)
+print(f"R2 score : {r2:.4f}")
